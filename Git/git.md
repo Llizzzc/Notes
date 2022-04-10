@@ -14,13 +14,13 @@
 
 ## 创建仓库
 + `git init`	// 将当前目录变为git仓库
-+ `git add (-f) FileName1 FileName2`	// 将文件添加至暂存区
++ `git add (-f) FileName1 FileName2`	// 将文件添加至暂存区，-f表示强制
 + `git add .`	// 添加当前目录下所有文件至暂存区
 + `git add DirectoryName`	// 将指定目录添加至暂存区，包括子目录
 + `git commit -m "Description"`	// 将暂存区文件添加至仓库，同时添加描述信息
 
 ## 查看状态
-+ `git status (-s)`	// 当前仓库状态
++ `git status (-s)`	// 当前仓库状态，-s表示简洁显示
 + `git diff FileName`	// 查看暂存区与工作区的差异
 + `git diff --cached FileName`	// 查看暂存区与仓库的差异
 + `git diff HEAD FileName`	// 查看所有差异
@@ -45,7 +45,7 @@
 ## 远程仓库
 + `ssh-keygen -t rsa -C "YourEmail"`	// ~/.ssh中的id_rsa.pub添加至github
 + `git remote add origin git@github.com:Llizzzc/RepositoryName.git`	// 关联远程库
-+ `git push (-u) origin main`	// 提交至远程库
++ `git push (-u) origin main`	// 提交至远程库，-u代表首次提交
 + `git remote -v`	// 查看远程库信息
 + `git remote rm origin`	// 断开远程库连接
 + `git clone git@github.com:Llizzzc/RepositoryName.git`	// 从远程库克隆
@@ -57,7 +57,7 @@
 + `git switch -c BranchName`	// 创建并切换分支
 + `git checkout -b BranchName`	// 创建并切换分支
 + `git branch`	// 查看分支
-+ `git branch -d(-D) BranchName`	// 删除分支
++ `git branch -d(-D) BranchName`	// 删除分支，-D为强制
 + `git merge BranchName`	// 合并分支至当前分支
 + `git merge --no-ff -m "Description" BranchName`	// 删除分支依然保留分支信息
 + `git branch -M OldName NewName`	// 重命名分支
@@ -80,7 +80,7 @@
 + `git tag -a TagName -m "Description" CommitId`	// 带说明的标签
 + `git show TagName`	// 查看标签详情
 + `git tag -d TagName`	// 删除标签
-+ `git push origin TagName(--tags)`	// 将标签推送到远程库
++ `git push origin TagName(--tags)`	// 将标签推送到远程库，--tags代表所有
 + `git push origin :refs/tags/TagName`	// 从远程库删除标签
 
 ## 自定义
