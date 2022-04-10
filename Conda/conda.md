@@ -1,5 +1,5 @@
 # Conda
->1.[M1配置Conda](https://blog.csdn.net/yc11tentgy/article/details/113469988 "conda")
+>1. [M1配置Conda](https://blog.csdn.net/yc11tentgy/article/details/113469988 "conda")
 
 ## 常用命令
 + `conda create --name EnvName python=Version`	// 创建环境
