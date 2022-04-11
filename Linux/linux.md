@@ -5,7 +5,7 @@
 
 ## 一、网络连接
 1. 桥连接：Linux可以和其他系统通信，但是可能导致ip冲突
-2. NAT（常用）：Linux可以通过主机ip转换来访问外网，不会造成ip冲突
+2. NAT(常用)：Linux可以通过主机ip转换来访问外网，不会造成ip冲突
 3. 主机模式：Linux是独立主机，不能访问外网
 
 ## 二、系统分区
@@ -25,11 +25,13 @@
 |安装包|安装完的软件|不断变化的文件，包括日志|安全子系统|
 
 ## 四、远程连接
-+ `ssh -p Port User@Host`	// 连接服务器
++ `ssh -p Port UserName@Host`	// 连接服务器，-p为端口，22端口
++ `netstat -anp | more`	// 查看监听端口信息
 + `exit`	// 退出服务器
-+ `scp -P Port (-r) User@Host:绝对路径 本地绝对路径`	// 下载，-r代表文件夹，22端口
-+ `scp -P Port (-r) 本地绝对路径 User@Host:绝对路径`	// 上传
-+ `sftp -P Port User@Host`	// 建立sftp传输连接，cd代表远程操作，lcd代表本地操作
++ `ssh-keygen -R Host`	// 删除远端密钥
++ `scp -P Port (-r) UserName@Host:绝对路径 本地绝对路径`	// 下载，-r代表文件夹
++ `scp -P Port (-r) 本地绝对路径 UserName@Host:绝对路径`	// 上传
++ `sftp -P Port UserName@Host`	// 建立sftp传输连接，cd代表远程操作，lcd代表本地操作
 + `get (-r) 远程路径 本地路径`	// 下载
 + `put (-r) 本地路径 远程路径`	// 上传
 
@@ -41,7 +43,7 @@
 2. 常用快捷键：
 	+ `(n)yy`	// 复制当前行，n表示从当前行开始往下一共复制n行，p粘贴
 	+ `(n)dd`	// 删除，同复制
-	+ `/KeyWord`	// 查找，输入n查找下一个
+	+ `/KeyWord`	// 查找，按n查找下一个
 	+ `set nu`	// ==命令行下==，设置文件行号
 	+ `set nonu`	// 取消行号
 	+  `G`	// 到文档末尾
@@ -51,22 +53,20 @@
 	+  `(n)space`	// 向右移动这一行n个字符
 	+  `0`	// 数字0，移动到这一行最前
 	+  `$`	// 移动到这一行最后
-	+  `ctrl + f`	// 下翻
-	+  `ctrl + b`	// 上翻
+	+  `ctrl + (f b)`	// f下翻，b上翻
 	+  `.`	// 重复上一个动作
 
 ## 六、用户管理
 用户至少要属于一个组，家目录为/home，用户登录时自动进入家目录
 1. 关机重启
-	+ `shutdown -h now(1)`	// 立即关机，1表示一分钟后关机
-	+ `shutdown -r now`	// 立即重启
+	+ `shutdown (-h -r) (now 1)`	// -h关机，-r重启，now为立刻，1表示一分钟后关机
 	+ `halt`	// 关机
 	+ `reboot`	// 重启
 	+ `sync`	// 保存数据，关机前执行一下
 2. 登录注销
 	+ `logout`	// 注销，图形界面注销无效
 3. 用户
-	+ `useradd (-d UserDirectory) (-g GroupName) (-m) UserName`	// 创建用户，同时创建与用户同名的组和家目录，-d表示指定家目录，-m表示不存在该目录则创建，-g指定组
+	+ `useradd (-d DirectoryName -g GroupName -m) UserName`	// 创建用户，同时创建与用户同名的组和家目录，-d表示指定家目录，-m表示不存在家目录则创建，-g指定组
 	+ `passwd UserName`	// 改密
 	+ `userdel (-r) UserName`	// 删除用户，-r表示同时删除家目录
 	+ `usermod -g GroupName UserName`	// 修改属组
@@ -90,5 +90,56 @@
 |系统未使用|图形界面|系统重启|3，5使用多|
 
 root找回密码：启动时按enter，按e，选中内核再按e，输入空格1回车，然后输入b启动改密码
-+ `init Num`	// 更改运行级别
+1. 帮助
+	+ `init n`	// 更改运行级别
+	+ `man Command`	// 查询命令
+	+ `help Command`	// 只能查询内置命令
+2. 文件目录
+	+ `pwd`	// 显示当前工作目录绝对路径
+	+ `ls (-a -l) (DirectoryName)`	// 列出目录下文件，-a包括隐藏文件，-l包括文件权限
+	+ `cd DirectoryName(. .. ~)`	// .为当前目录，..为上一级，~为家目录，可以使用绝对路径
+	+ `mkdir (-p) DirectoryNmae`	// 创建目录，-p为一次创建多级目录
+	+ `rmdir (-p) DirectoryNmae`	// 删除空目录 ，-p为删除该目录后，若上一级变为空目录则也删除
+	+ `touch FileName1 FileName2`	// 创建文件
+	+ `cp (-r -i) Source Destination`	// 复制文件，-r为递归复制整个目录，-i为覆盖前询问
+	+ `rm (-r -f) (DirectoryName FileName)`	// 删除文件或目录，-r递归删除，-f强制不提示
+	+ `mv Source Destination`	// 移动文件或目录，也可以重命名
+	+ `cat (-n) FileName`	// 查看文件，只读，-n显示行号
+	+ `more FileName`	// 查看文件，一页一页显示
+	+ `less FileName`	// 看大文件方便
+	+ `(echo Context cat FileName ls -l) (> >>) FileName`	// 将指定内容写入文件，>为覆盖，>>为追加
+	+ `echo Context`	// 输出内容到控制台
+	+ `head (-n Num) FileName`	// 显示文件前10行，-n指定行数
+	+ `tail (-n Num -f) FileName`	// 显示文件最后10行，-f实时追踪更新
+	+ `ln (-s) Source LinkName`	// 给原文件创建软链接，指向原文件，-s表示可以为目录
+	+ `history (n)`	// 显示历史指令，n指定最近n条指令
+3. 时间日期
+	+ `date (-s) ("+%y-%m-%d %H:%M:%S")`	// 显示当前时间，可以指定格式，-s为设置时间
+	+ `cal (Year)`	// 显示日历，可以显示指定年份下所有
+4. 搜索查找
+	+ `find DirectoryName (-name FileName -user UserName -size (+ -)n)`	// 在指定目录下查找，按名称，所有者，大小查找，+为大于，-为小于
+	+ `locate FileName`	// 先执行updatedb，再查找
+	+ `grep (-n -i) KeyWord FileName`	// 关键字查找，-n显示行号，-i不区分大小写，|管道符号，将前一个指令结果传给下一个指令
+5. 压缩和解压
+	+ `gzip FileName`	// 压缩，不保留原先文件
+	+ `gunzip FileName.gz`	// 解压
+	+ `zip (-r) FileName.zip FileName`	// -r压缩整个目录
+	+ `unzip (-d DirectoryName) FileName.zip`	// -d指定解压路径
+	+ `tar -cvzf FileName.tar.gz DirectoryName`	// 可以为单独文件，-c产生.tar文件，-v显示详细信息，-f指定压缩后的文件名，-z打包压缩
+	+ `tar -cvxf FileName.tar.gz (-C DirectoryName)`	// -x解压，-C指定目录，必须存在该目录
 
+## 包管理
+1. ubuntu -- apt，/etc/apt/sources.list默认为官方软件库，备份后更换为国内源，默认不支持远程登录
+	+ `apt-get update`	// 更新源
+	+ `apt-get install Package (--reinstall)`	// 安装包，可重装
+	+ `apt-get remove Package (--purge)`	// 删除包，可选清除配置文件
+	+ `apt-cache search Package`	// 搜索包
+	+ `apt-cache show Package`	// 获取包相关信息
+	+ `apt-get upgrade`	// 更新已安装的包
+	+ `apt-get autoclean`	// 删除过期的包
+	+ `apt list --installed`	// 查看已安装的包
+	+ `apt-get source Package`	// 下载包源代码 
+	+ `apt-get -f install`	// 修复安装
+	+ `apt-get install openssh-server`	// 安装sshd服务
+	+ `service sshd start`	// 启动sshd服务
+2. centos

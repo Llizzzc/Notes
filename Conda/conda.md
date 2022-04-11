@@ -1,5 +1,6 @@
 # Conda
 >1. [M1配置Conda](https://blog.csdn.net/yc11tentgy/article/details/113469988 "conda")
+>2. [常用命令](https://blog.csdn.net/weixin_45534930/article/details/122049505 "conda")
 
 ## 常用命令
 + `conda create --name EnvName python=Version`	// 创建环境
@@ -9,6 +10,7 @@
 + `conda search PackageName`	// 搜索包
 + `conda install PackageName`	// 安装包
 + `conda remove PackageName`	// 删除包
++ `conda clean -p`	// 删除没用的包
 + `conda update`	// 更新conda
 + `conda update --all`	// 更新所有包
 + `conda env -h`	// 环境管理命令帮助

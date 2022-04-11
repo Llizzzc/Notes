@@ -43,7 +43,7 @@
 + `git rm --cached FileName`	// 取消暂存
 
 ## 七、远程仓库
-+ `ssh-keygen -t rsa -C "YourEmail"`	// ~/.ssh中的id_rsa.pub添加至github
++ `ssh-keygen -t rsa -C "YourEmail"`	// ~/.ssh中的id_rsa.pub添加至github，-t为指定密钥类型，-C为注释
 + `git remote add origin git@github.com:Llizzzc/RepositoryName.git`	// 关联远程库
 + `git push (-u) origin main`	// 提交至远程库，-u代表首次提交
 + `git remote -v`	// 查看远程库信息
