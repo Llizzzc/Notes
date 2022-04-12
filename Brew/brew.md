@@ -8,7 +8,7 @@
 + `brew upgrade Package`	// 更新包
 + `brew install Package`	// 安装包
 + `brew uninstll Package`	// 卸载包
-+ `brew cleanup (-n)`	// 清理所有包的旧版本，-n显示要清除的内容
++ `brew cleanup (-n -s)`	// 清理所有包的旧版本，-n显示要清除的内容，-s清除缓存
 + `brew list`	// 查看安装列表
 + `brew info Package`	// 查看包信息
 + `brew search Package`	// 搜索包

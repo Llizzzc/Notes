@@ -6,7 +6,7 @@
 ## 一、网络连接
 1. 桥连接：Linux可以和其他系统通信，但是可能导致ip冲突
 2. NAT(常用)：Linux可以通过主机ip转换来访问外网，不会造成ip冲突
-	+ `ping Host`	// 测试主机之间网络连通性
+	+ `ping Ip`	// 测试主机之间网络连通性
 	+ `ifconfig`	// 查看ip和网关
 3. 主机模式：Linux是独立主机，不能访问外网
 
@@ -28,13 +28,12 @@
 |安装包|安装完的软件|不断变化的文件，包括日志|安全子系统|
 
 ## 四、远程连接
-+ `ssh -p Port UserName@Host`	// 连接服务器，-p为端口，22端口
-+ `netstat -anp | more`	// 查看监听端口信息
++ `ssh -p Port UserName@Ip`	// 连接服务器，-p为端口，22端口
 + `exit`	// 退出服务器
-+ `ssh-keygen -R Host`	// 删除远端密钥
-+ `scp -P Port (-r) UserName@Host:绝对路径 本地绝对路径`	// 下载，-r代表文件夹
-+ `scp -P Port (-r) 本地绝对路径 UserName@Host:绝对路径`	// 上传
-+ `sftp -P Port UserName@Host`	// 建立sftp传输连接，cd代表远程操作，lcd代表本地操作
++ `ssh-keygen -R Ip`	// 删除远端密钥
++ `scp -P Port (-r) UserName@Ip:绝对路径 本地绝对路径`	// 下载，-r代表文件夹
++ `scp -P Port (-r) 本地绝对路径 UserName@Ip:绝对路径`	// 上传
++ `sftp -P Port UserName@Ip`	// 建立sftp传输连接，cd代表远程操作，lcd代表本地操作
 + `get (-r) 远程路径 本地路径`	// 下载
 + `put (-r) 本地路径 远程路径`	// 上传
 
@@ -144,20 +143,37 @@ root找回密码：启动时按enter，按e，选中内核再按e，输入空格
 	+ `du (-h -a -c --max-depth=) DirectoryName`	// 查看指定目录磁盘情况，-a代表包括文件，--max-depth指定查询深度，-c列出明细同时增加汇总
 	+ `tree DirectoryName`	// 将目录按树形表示
 8. 进程管理
-	+ 
+	+ `ps (-aux -ef)`	// 查看系统执行的进程，-e显示所有进程，-f包括父进程，-a显示当前终端所有进程，-u以用户格式显示，-x显示后台运行参数
+	+ `top (-d -i -p)`	// 动态监控进程，-d指定更新间隔，-p监控指定进程，-i不显示闲置和僵尸进程，可以输入u指定显示某个用户的进程，k终止某个进程
+	+ `pstree (-u -p)`	// 树状显示，-p显示pid，-u显示所属用户
+	+ `netstat (-anp)`	// 查看网络情况，-an指按一定顺序输出，-p显示哪个进程在调用
+	+ `kill (-9) Pid`	// 终止进程，-9强制
+	+ `killall ProcessName`	// 通过名字终止进程
+9. 服务管理，/etc/init.d
+	+ `service ServerName (start stop restart reload status)`	// 服务指令
+	+ `telnet Ip Port`	// 检查linux某个端口是否在监听，并可以访问
+	+	`chkconfig (--Level n) (ServerName) (on off) (--list)`	// 显示或设置每个服务的各个运行级别状态
 
-## 包管理
-1. ubuntu -- apt，/etc/apt/sources.list默认为官方软件库，备份后更换为国内源，默认不支持远程登录
-	+ `apt-get update`	// 更新源
-	+ `apt-get install Package (--reinstall)`	// 安装包，可重装
-	+ `apt-get remove Package (--purge)`	// 删除包，可选清除配置文件
-	+ `apt-cache search Package`	// 搜索包
-	+ `apt-cache show Package`	// 获取包相关信息
-	+ `apt-get upgrade`	// 更新已安装的包
-	+ `apt-get autoclean`	// 删除过期的包
-	+ `apt list --installed`	// 查看已安装的包
-	+ `apt-get source Package`	// 下载包源代码 
-	+ `apt-get -f install`	// 修复安装
-	+ `apt-get install openssh-server`	// 安装sshd服务
-	+ `service sshd start`	// 启动sshd服务
-2. centos
+## 八、包管理
+1. ubuntu，/etc/apt/sources.list默认为官方软件库，备份后更换为国内源，默认不支持远程登录
+  + `apt-get update`	// 更新源
+  + `apt-get install Package (--reinstall)`	// 安装包，可重装
+  + `apt-get remove Package (--purge)`	// 删除包，可选清除配置文件
+  + `apt-cache search Package`	// 搜索包
+  + `apt-cache show Package`	// 获取包相关信息
+  + `apt-get upgrade`	// 更新已安装的包
+  + `apt-get autoclean`	// 删除过期的包
+  + `apt list --installed`	// 查看已安装的包
+  + `apt-get source Package`	// 下载包源代码 
+  + `apt-get -f install`	// 修复安装
+  + `apt-get install openssh-server`	// 安装sshd服务
+  + `service sshd start`	// 启动sshd服务
+2. centos，/etc/yum.repos.d/CentOS-Base.repo，备份后换为国内源
+	+ `yum install Package`	// 下载包
+	+ `yum list | grep Package`	// 查找包
+	+ `yum update Package`	// 更新所有需要更新的包
+	+ `yum check-update`	// 检查系统中需要更新的包
+	+ `yum list installed`	// 显示已安装的包
+	+ `yum info Package`	// 显示包信息
+	+ `yum remove Package`	// 删除包
+	+ `yum clean`	// 清除缓存文件
