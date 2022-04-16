@@ -10,6 +10,10 @@
 + `docker pull Image(:Tag)`	// 下载镜像，可指定版本
 + `docker rmi (-f) Image($(docker images -aq))`	// 删除镜像，-f强制删除，可以一次删完，可通过id删除
 + `docker system df`	// 显示镜像，容器，数据卷所占空间
++ `docker login`	// 登录docker仓库
++ `docker logout`	// 退出docker仓库
++ `docker tag Image:Tag UserName/RepositoryName:Tag`	// 拷贝并重命名镜像
++ `docker push UserName/RepositoryName:Tag`	// 推送到远程仓库
 
 ## 二、容器命令
 有镜像才能创建容器
@@ -27,4 +31,6 @@
 + `docker attach Container`	// 重新进入容器，exit会退出
 + `docker cp Contain:Source Destination`	// 拷贝容器内文件到目的主机
 + `docker export Container > Name.tar`	// 把容器内容打包为tar包
-+ `cat Name.tar | docker import - ImageUser/Image:Tag`	// 恢复镜像
++ `cat Name.tar | docker import - ImageName:Tag`	// 恢复镜像
++ `docker commit -m="Description" -a="Author" Container ImageName:Tag`	// 提交容器使其成为一个新镜像
++ ``
