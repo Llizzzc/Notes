@@ -3,11 +3,11 @@
 >
 >2. [千峰教育Mysql](https://www.bilibili.com/video/BV1qb4y1Y722?p=29&spm_id_from=pageDriver "mysql")
 
-## 基本概念
+## 一、基本概念
 1. 关系型数据库，采用关系模型来组织数据存储，以行和列形式存储数据并记录数据与数据之间的关系（将数据存储在表格），可以通过建立表格与表格之间的关联来维护数据与数据之间的关系。
 2. 非关系型数据库，采用键值对模型来存储数据，只完成数据的记录，不回记录数据与数据之前的关系。
 
-## 用户管理
+## 二、用户管理
 + `mysql (-h Ip) -u UserName -p`	// 登录mysql，-h远程连接，/etc/mysql/mysql.conf.d/mysqld.cnf(注释bind-address=127.0.0.1)，重启ubuntu
 + `quit;`	// 退出mysql
 + `SHOW tables;`	// 显示该数据库所有表
@@ -52,10 +52,10 @@
 |ALL|所有||
 |USAGE|什么都无||
 
-## SQL语句分类
-### 一、DDL：数据定义语言
+## 三、SQL语句分类
+### 1.DDL：数据定义语言
 
-####  1.数据库操作
+####  1.1数据库操作
 
 + `create database (if not exists) dbName (character set Encoding);`	// 创建数据库，可以指定字符编码
 + `show databases;`	// 显示所有数据库
@@ -64,7 +64,7 @@
 + `drop database (if exists) dbName;`	// 删除数据库
 + `use dbName;`	// 切换数据库
 
-#### 2.表操作
+#### 1.2表操作
 
 + 
     ```sql
@@ -88,7 +88,7 @@
 + `alter table tbName drop foreign key fkName;`	// 删除外键约束
 + `alter table add constraint fkName foreign key(Term) references tbName(Term) ON UPDATE CASCADE ON DELETE CASCADE;`	// 级联修改和删除，更新被引用表的被引用字段，引用表的引用字段也会同步更新
 
-#### 3.数据类型
+#### 1.3数据类型
 
 + 数值类型
   |tinyint|smallint|mediumint|int/integer|bigint|float|double|decimal|
@@ -104,25 +104,25 @@
   |:--:|:--:|:--:|:--:|:-:-|
   |2021-09-13|12:12:33|2021|2021-09-13 12:12:33|20210913 121233|
 
-#### 4.字段约束
+#### 1.4字段约束
 
 + 非空约束(not null)：必须提供值
 + 唯一约束(unique)：此字段值不能重复
 + 主键约束(primary key)：非空且唯一，每个表中最多只能有一个主键，自增`auto_increment`，联合主键是将表的多个字段一起设置为表的主键
 + 外健约束(foreign key)：建立不同表之间的关联
 
-### 二、DML：数据操作语言
+### 2.DML：数据操作语言
 
-#### 1.插入语句
+#### 2.1插入语句
 + `insert into tbName(Term1, Term2) values('', '');`	// 要保持前后对应
-#### 2.删除语句
+#### 2.2删除语句
 + `delete from tbName where Condition;`	// 没有where则删除表中所有数据
-#### 3.修改语句
+#### 2.3修改语句
 + `update tbName set Term1='', Term2='' where Condition;`	// 没有where则会修改一整列
 
-### 三、DQL：数据查询语言
+### 3.DQL：数据查询语言
 
-#### 1.单表查询
+#### 3.1单表查询
 + `select Term1, Term2 from tbName where Condition;`	// 用and、or来支持多条件，用not来取反，条件有=、!=、>、<、>=、<=、between n1 and n2、like 'reg'(%表示任意多个字符，_为占位符)
 + `select Term from tbName where Condition order by Term1 asc|desc, Term2 asc|desc; `	// 结果按字段排序，默认升序，可以先满足第一个规则再加其他规则
 + `select Term as NewName from tbName;`	// 处理结果，可以给字段取别名
@@ -138,7 +138,7 @@
 + `select Term, Function(Term) from tbName group by Term having Condition;`	// 按字段分组，返回每个分组的第一个值，可以加上聚合函数一起使用，可加having对结果进行筛选
 + `slect ... from ... where ... limit (PageNum - 1)*PageSize, PageSize;`	// 查询第n页数据
 
-#### 2.多表查询
+#### 3.2多表查询
 + 一对一：通过主键关联，即两张数据表中主键相同的数据为相互对应的数据；也可以通过唯一外键关联，即在任意一张表中添加一个字段设置为外键约束与另一张表的主键关联，同时设置唯一约束
 + 一对多与多对一：在多端添加外键与一端的主键关联
 + 多对多：创建一个关系表，在表中设置两个外键分别关联两张表的主键
@@ -147,9 +147,9 @@
 + `select ... from tbName1 right join tbName2 on Condition;`	// 与左连接相反
 + `select ... from tbName where Term=(select ...)`	// 嵌套查询，将子查询的结果作为父查询的条件，如果子查询返回多个结果，使用in
 
-### 四、DCL：数据控制语言
+### 4.DCL：数据控制语言
 
-## 存储过程
+## 四、存储过程
 
 ### 一、概念
 
