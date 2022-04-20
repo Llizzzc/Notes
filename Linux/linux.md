@@ -38,11 +38,11 @@
 + `put (-r) 本地路径 远程路径`	// 上传
 
 ## 五、编辑器
-### 1.三种模式：
+### 1.三种模式
 + 正常模式：打开即正常模式，可以使用快捷键
 + 编辑模式：输入内容，按i、a、o、r等进入
 + 命令行模式：完成读取、保存、离开等操作，先esc进入正常模式，按:进入，q!强制退出
-### 2.常用快捷键：
+### 2.常用快捷键
 + `(n)yy`	// 复制当前行，n表示从当前行开始往下一共复制n行，p粘贴
 + `(n)dd`	// 删除，同复制
 + `/KeyWord`	// 查找，按n查找下一个
@@ -149,7 +149,8 @@ root找回密码：启动时按enter，按e，选中内核再按e，输入空格
 + `netstat (-anp)`	// 查看网络情况，-an指按一定顺序输出，-p显示哪个进程在调用
 + `kill (-9) Pid`	// 终止进程，-9强制
 + `killall ProcessName`	// 通过名字终止进程
-### 9.服务管理，/etc/init.d
+### 9.服务管理
+文件/etc/init.d
 + `service ServerName (start stop restart reload status)`	// 服务指令
 + `telnet Ip Port`	// 检查linux某个端口是否在监听，并可以访问
 +	`chkconfig (--Level n) (ServerName) (on off) (--list)`	// 显示或设置每个服务的各个运行级别状态
@@ -179,3 +180,83 @@ root找回密码：启动时按enter，按e，选中内核再按e，输入空格
 + `yum info Package`	// 显示包信息
 + `yum remove Package`	// 删除包
 + `yum clean`	// 清除缓存文件
+
+## 九、Shell语法
+脚本需要以`#!/bin/bash`开头，还需要可执行权限
+### 1.变量
++ 变量分为系统环境变量和用户自定义变量，系统变量有`$HOME`、`$PWD`、`$HELL`、`$USE`、`$PATH`等
++ `set`	// 查看所有shell变量
++ `readonly a=100`	// 定义变量，readonly为静态变量，不能unset
++ `echo $a`	// 输出变量，$0~$9表示命令行参数，其中$0代表命令本身，$\*表示命令行所有参数，看成一个整体，$@也表示所有，但是每个参数区分对待，$#代表命令行参数的个数
++ `unset a`	// 撤销变量
++ `a=$(ls -a)`	// 将命令结果赋值给变量，也可以用反引号
++ `export a=100`	// 将变量输出为环境变量，需要使用source让其生效
++ `env`	// 查看所有环境变量
++ `read (-p -t) Num`	// 从控制台读取放入Num，-p添加提示，-t指定等待时间
+### 2.运算式
++ `a=$((2+3))`
++ `a=$[2+3]`
+### 3.判断符
++ `=`		// 字符串比较
++ `-it`	// 小于
++ `le`	// 小于等于
++ `eq`	// 等于
++ `gt`	// 大于
++ `ge`	// 大于等于
++ `ne`	// 不等
++ `-r`	// 有读权限
++ `-w`	// 有写权限
++ `-x`	// 有执行权限
++ `-f`	// 文件存在并且是常规文件
++ `-e`	// 文件存在
++ `-d`	// 文件存在并且是个目录
+### 4.流程控制
++ ```shell
+	if [ Condition ]
+		then
+			...
+		elif [ Condition ]
+		then
+			...
+	fi
+	```
++ ```shell
+	case $a in
+	"1")
+		...
+		;;
+	"2")
+		...
+		;;
+	*)
+		...
+		;;
+	esac
+	```
++ ```shell
+	for i in "$*"
+	do
+		...
+	done
+	```
++ ```shell
+	for(i=1;i<10;i++)
+	do
+		...
+	done
+	```
++ ```shell
+	while [ Condition ]
+	do
+		...
+	done
+	```
+### 5.函数
++ `dirname Path`	// 返回完整路径最后/的前面的部分
++ `basename String Suffix`	// 删除文件路径所有前缀，Suffix文件后缀，指定后可去除
++ ```shell
+	function fun(){
+		...
+	}
+	// fun $n1 $n2调用
+	```
