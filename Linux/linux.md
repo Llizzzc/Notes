@@ -81,6 +81,7 @@
 + `groupdel GroupName`	// 删除组
 ### 6.权限管理
 d(目录)、l(链接文件)、-(普通文件)、r=4、w=2、x=1
+
 ![](./img/01.jpeg)
 + `chown (-R) UserName(:GroupName) FileName`	// 更改文件目录所有者，也可以改所在组，-R表示递归更改
 + `chgrp (-R) GroupName FileName`	// 更改文件目录所在组
