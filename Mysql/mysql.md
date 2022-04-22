@@ -1,6 +1,5 @@
 # Mysql
 >1. [配置Mysql](https://blog.csdn.net/tyt_XiaoTao/article/details/80664740 "mysql")
->
 >2. [千峰教育Mysql](https://www.bilibili.com/video/BV1qb4y1Y722?p=29&spm_id_from=pageDriver "mysql")
 
 ## 一、基本概念
@@ -151,6 +150,88 @@
 
 ## 四、存储过程
 
-### 一、概念
+### 1.概念
 
 + 能够将完成特定功能的SQL指令进行封装(SQL指令集)，编译之后存储在数据库服务器上，并为其去一个名字，客户端就可以通过名字来直接调用这个SQL指令集，获取执行结果
+### 2.优缺点
++ 优点：
+	+ SQL指令无需客户端编写，通过网络传送，可以节省网络开销，同时避免SQL指令在网络传输过程中被恶意篡改
+	+ 存储过程经过编译创建并保存在数据库中，执行过程无需重复的进行编译操作，对SQL指令的执行过程进行了性能提升
+	+ 存储过程中多个SQL指令之间存在逻辑关系，支持流程控制语句，可以实现更为复杂的业务
++ 缺点
+	+ 存储过程是根据不同的数据库进行编译、创建并存储在数据库中，当我们需要切换到其它数据库产品时，需要重新编写存储过程
+	+ 存储过程受限于数据库产品，如果需要性能优化会成为一个问题
+	+ 在互联网产品中，如果需要数据库的高并发访问，使用存储过程会增加数据库的连接执行时间，因为我们把复杂的业务交给了数据库处理
+### 3.语法
+#### 3.1存储过程管理
+存储过程是属于某个数据库的，只能在当前数据库调用存储过程
++ ```sql
+	create procedure prcName(in Arg1 Type, in Arg2 Type, out Arg3 Type)
+	begin
+		SQL...;
+	end;	// 创建
+	set Arg3 = 0;	// 赋值
+	call Name(Arg1, Arg2, Arg3);	// 调用
+	select Arg3 from dual;	// 查看变量
+	```
++ `show procedure status where db='dbName;`	// 查看某数据库的存储过程
++ `show create procedure dbName.prcName;`	// 查看存储过程创建细节
++ `alter procedure prcName Property;`	// 修改存储过程特征
+	+ CONTAINS SQL	// 包含SQL语句，但不包含读写语句
+	+ NO SQL	// 不包含SQL语句
+	+ READS SQL DATA	// 包含读语句
+	+ MODIFIES SQL DATA	// 包含写语句
+	+ SQL SECURITY (DEFINER INVOKER)	// 指明定义者还是调用者可执行
+	+ COMMENT 'descript'	// 注释
++ `drop procedure prcName;`	// 删除
+#### 3.2变量
++ `declare Arg Type (default Value);`	// 定义局部变量
++ `set @Arg=Value;`	// 定义全局变量，变量名以@开头，在dual中查找
++ `select count(Term) into Arg from tbName;`	// 将查询结果赋值给变量
+#### 3.3参数
++ `in`	// 输入，传递数据给存储过程的参数
++ `out`	// 返回值
++ `inout`	// 可以当输入也可以当返回值
+#### 3.4流程控制
++ ```sql
+	if Condition then
+		SQL...;
+	else
+		SQL...;
+	end if;
+	```
++ ```sql
+	case a
+	when 1 then
+		SQL...
+	when 2 then
+		SQL...
+	else
+		SQL...
+	end case;
+	```
++ ```sql
+	while Condition do
+		SQL...
+	end while;
+	```
++ ```sql
+	repeat
+		SQL...;
+	until Condition
+	end repeat;
+	```
++ ```sql
+	LoopName loop
+		SQL...;
+		if Condition then
+			leave LoopName;
+		end if;
+	end loop;
+	```
+### 4.游标
+游标可以用来依次取出查询结果集中的每一条数据
++ `declare cursName cursor for select ...;`	// 声明游标
++ `open cursName;`	// 打开游标
++ `fetch cursName into Agr1, Agr2...;`	// 提取游标当前指向的数据，游标自动下移
++ `close cursName;`	// 关闭游标
