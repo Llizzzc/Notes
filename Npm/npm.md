@@ -1,5 +1,6 @@
 # Npm
->1. [Npm命令](https://blog.csdn.net/u012982629/article/details/80676928?spm=1001.2101.3001.6650.14&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.pc_relevant_default&utm_relevant_index=18)
+>1. [Npm命令](https://blog.csdn.net/u012982629/article/details/80676928?spm=1001.2101.3001.6650.14&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.pc_relevant_default&utm_relevant_index=18 "npm")
+>2. [概念使用](https://www.bilibili.com/video/BV1a34y167AZ?spm_id_from=333.999.0.0 "npm")
 
 ## 常用命令
 + 项目上传github时要忽略node_modules目录
